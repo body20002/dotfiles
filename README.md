@@ -13,6 +13,11 @@ dotfiles commit -m "your message"
 dotfiles push -u origin main
 ```
 
+# Untrack README.md
+```bash
+dotfiles update-index --assume-unchanged README.md
+```
+
 ## TODO
 - [ ] Add screenshots
 
