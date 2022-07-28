@@ -1,0 +1,49 @@
+window:
+  opacity: 0.9
+  decorations: none
+  padding:
+    y: 2
+    x: 2
+font:
+  normal:
+    family: "Inconsolata Nerd Font"
+  bold:
+    family: "Inconsolata Nerd Font"
+    style: Bold
+  italic:
+    family: "Inconsolata Nerd Font"
+    style: Italic
+  bold_italic:
+    family: "Inconsolata Nerd Font"
+    style: Bold Italic
+
+  size: 12
+
+  mouse:
+    hide_when_typing: true
+
+colors:
+  primary:
+    background: '#282828'
+    foreground: '#a89984'
+  cursor:
+    text:       '#282828'
+    cursor:     '#a89984'
+  normal:
+    black:      '#282828'
+    red:        '#cc241d'
+    green:      '#d79921'
+    yellow:     '#b58900'
+    blue:       '#458588'
+    magenta:    '#b16286'
+    cyan:       '#689d6a'
+    white:      '#a89984'
+  bright:
+    black:      '#928374'
+    red:        '#cc241d'
+    green:      '#d79921'
+    yellow:     '#b58900'
+    blue:       '#458588'
+    magenta:    '#b16286'
+    cyan:       '#689d6a'
+    white:      '#a89984'

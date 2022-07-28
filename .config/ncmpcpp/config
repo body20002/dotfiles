@@ -1,0 +1,4 @@
+lyrics_directory = "~/.cache/lyrics"
+lyrics_fetchers = musixmatch, azlyrics, internet
+fetch_lyrics_for_current_song_in_background = yes
+follow_now_playing_lyrics = yes

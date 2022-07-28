@@ -1,0 +1,15 @@
+xset r rate 210 40
+xrandr --output HDMI-0 --mode 1920x1080 --rate 60 --dpi 96
+xrdb -load "$XDG_CONFIG_HOME/X11/xresources"
+picom --config /home/body20002/.config/picom/picom.conf --experimental-backends --animations &
+/usr/bin/dunst &
+xfce4-power-manager &
+lxsession &
+volumeicon &
+nm-applet &
+unclutter &
+feh --bg-fill --no-fehbg ~/Wallpapers/cat.jpg
+mpd ~/.config/mpd/mpd.conf &
+/sbin/mpDris2 &
+syncthing &
+keepassxc &
