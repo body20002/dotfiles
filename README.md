@@ -38,8 +38,16 @@ dotfiles push
 dotfiles update-index --assume-unchanged README.md
 ```
 
+# Screenshots
+![](screenshots/screenshot-4.png)
+![](screenshots/screenshot-3.png)
+![](screenshots/screenshot-0.png)
+![](screenshots/screenshot-1.png)
+![](screenshots/screenshot-2.png)
+![](screenshots/screenshot-5.png)
+
 
 ## TODO
-- [ ] Add screenshots
+- [x] Add screenshots
 
 fork me daddy
