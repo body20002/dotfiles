@@ -39,4 +39,3 @@ def on_client_new(c):
             _restore_bar_color()
         else:
             _clear_bar_color()
-

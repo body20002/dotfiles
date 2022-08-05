@@ -4,7 +4,7 @@ from libqtile.config import Group
 from theme import theme_layout
 
 layouts: list = [
-    layout.Columns(**theme_layout),# type: ignore
+    layout.Columns(**theme_layout),  # type: ignore
     layout.Max(**theme_layout),  # type: ignore
     layout.Floating(**theme_layout),  # type: ignore
 ]
@@ -54,4 +54,3 @@ groups = [
 ]
 
 del workspaces_names_and_settings  # we dont need you anymore
-

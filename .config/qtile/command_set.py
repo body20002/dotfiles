@@ -1,5 +1,6 @@
 from libqtile.extension.dmenu import Dmenu
 
+
 class CommandSet(Dmenu):
     """
     Give list of commands to be executed in dmenu style.
@@ -55,7 +56,7 @@ class CommandSet(Dmenu):
         out = super(CommandSet, self).run(items=self.commands.keys())
 
         try:
-            sout = out.rstrip("\n") # type: ignore
+            sout = out.rstrip("\n")  # type: ignore
         except AttributeError:
             # out is not a string (for example it's a Popen object returned
             # by super(WindowList, self).run() when there are no menu items to
@@ -64,7 +65,6 @@ class CommandSet(Dmenu):
 
         if sout not in self.commands:
             return
-
 
         command = self.commands[sout]
 

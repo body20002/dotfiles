@@ -1,17 +1,21 @@
 from libqtile import widget, qtile, bar, layout
 from libqtile.config import Screen, Match
 
+
 from theme import colors, bar_color
+from widgets.mpd import Mpd2Imporved
 
 
 def updates():
     qtile.groups[-2].cmd_toscreen()
     qtile.cmd_spawn("alacritty -t 'Updating The System' -e yay -Syu")
 
+
 def play_pause():
     for w in qtile.current_screen.top.widgets:
         if isinstance(w, widget.Mpris2):
             w.cmd_play_pause()
+
 
 widgets = [
     widget.CurrentLayoutIcon(scale=0.75),
@@ -28,7 +32,6 @@ widgets = [
     ),
     widget.Sep(),
     widget.TaskList(
-        width=1920 // 4 - 52,
         border=colors["primary"],
         icon_size=18,
         font_size=12,
@@ -43,16 +46,25 @@ widgets = [
     widget.Sep(),
     widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
     widget.Sep(),
-    widget.Mpris2(
-        width=1920 // 7 + 10,
-        stopped_text="No Music Playing",
+    Mpd2Imporved(
+        width=320,
+        # color_progress=colors["primary"],
+        idle_message="No Music Playing",
+        status_format="{play_status} {title} - {artist}",
         scroll=True,
         scroll_delay=1,
         scroll_clear=True,
         scroll_step=4,
-        display_metadata=["xesam:title", "xesam:artist"],
     ),
-    widget.TextBox(text="", width=bar.STRETCH, mouse_callbacks={"Button1": play_pause }),
+    # Mpris2Improved(
+    #     width=320,
+    #     stopped_text="No Music Playing",
+    #     scroll=True,
+    #     scroll_delay=1,
+    #     scroll_clear=True,
+    #     scroll_step=4,
+    #     display_metadata=["xesam:title", "xesam:artist"],
+    # ),
     widget.Sep(),
     widget.CPU(format="CPU: {load_percent:>3,.0f}%"),
     widget.Sep(),

@@ -3,6 +3,7 @@ from pathlib import Path
 
 from libqtile.command import lazy
 from libqtile.config import Key, KeyChord
+
 # from libqtile import extension
 from command_set import CommandSet
 
@@ -28,6 +29,7 @@ edit_config_selector = CommandSet(
     selected_background=colors["primary"],
 )
 
+
 def launch_nvim_in_env(dir: Path):
     for file in dir.glob("*"):
         if file.match("Pipfile"):
@@ -43,12 +45,11 @@ edit_code_selector = CommandSet(
             dmenu_lines=20,
             foreground=colors["primary"],
             selected_background=colors["primary"],
-            commands={
-                dir.stem.capitalize(): launch_nvim_in_env(dir)
-                for dir in dirs.glob("*")
-            }
+            commands={dir.stem.capitalize(): launch_nvim_in_env(dir) for dir in dirs.glob("*")},
         )
-        if dirs.stem not in ["mysite", "site", "rice"] else launch_nvim_in_env(dirs) for dirs in (home_path / "code").glob("*")
+        if dirs.stem not in ["mysite", "site", "rice"]
+        else launch_nvim_in_env(dirs)
+        for dirs in (home_path / "code").glob("*")
     },
     dmenu_prompt="Edit >",
     dmenu_ignorecase=True,
@@ -163,7 +164,6 @@ keys = [
         lazy.spawn("gtk-launch spotify-adblock.desktop"),
         desc="launch spotify",
     ),  # yes I use adblock sue me (don't actually do that)
-
     # dmenu commands
     Key([mod, "shift"], "d", lazy.run_extension(script_selector), desc="script seletor"),
     # Key([mod, "shift"], "e", lazy.run_extension(edit_code_selector), desc="edit code seletor"),
@@ -195,4 +195,3 @@ for i in groups:
             ),
         ]
     )
-
