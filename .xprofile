@@ -6,6 +6,7 @@ picom --config /home/body20002/.config/picom/picom.conf --experimental-backends 
 xfce4-power-manager &
 lxsession &
 volumeicon &
+numlockx &
 nm-applet &
 unclutter &
 feh --bg-fill --no-fehbg ~/Wallpapers/cat.jpg

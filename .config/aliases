@@ -1,22 +1,28 @@
-alias U='sudo pacman -Syu'
-alias I='sudo pacman -S'
+alias %='source ~/.config/zsh/.zshrc'
 
-alias v='nvim'
+alias I='sudo pacman -S'
+alias U='sudo pacman -Syu'
+
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+alias gitl="git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:*.idea' ':!:**/*.eslintrc' ':!:*package-lock.json' ':!:*Pipfile.lock' ':!:*pic*' | xargs wc -l"
+
+alias mkdir="mkdir -p"
+
+alias xclip="xclip -selection clipboard"
+
+alias myip="curl http://ipecho.net/plain; echo"
+
+alias nvidia-settings="nvidia-settings --config="$XDG_CONFIG_HOME"/nvidia/settings"
 
 alias py='python3'
 alias pyserver='python3 -m http.server'
 alias venv='source ./.venv/bin/activate'
 
-alias %='source ~/.config/zsh/.zshrc'
-alias myip="curl http://ipecho.net/plain; echo"
-
-alias mkdir="mkdir -p"
-alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
-alias sus='systemctl suspend'
 alias suh='systemctl hibernate'
+alias sus='systemctl suspend'
 
-alias gitl="git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:*.idea' ':!:**/*.eslintrc' ':!:*package-lock.json' ':!:*Pipfile.lock' ':!:*pic*' | xargs wc -l"
+alias v='nvim'
 
 alias wget='wget --hsts-file="$XDG_DATA_HOME/wget-hsts"'
-alias xclip="xclip -selection clipboard"
+

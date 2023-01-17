@@ -48,3 +48,9 @@ opt.clipboard = "unnamedplus"
 opt.formatoptions = "jql"
 opt.laststatus = 3
 opt.completeopt = {"menu", "menuone", "preview"}
+
+-- Backup -- I have power issues :/
+-- opt.backup = true
+-- opt.swapfile = true
+opt.undodir = os.getenv("HOME") .. "/.cache/undodir"
+opt.undofile = true

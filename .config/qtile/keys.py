@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from libqtile.command import lazy
-from libqtile.config import Key, KeyChord
+from libqtile.config import Key, KeyChord, ScratchPad, DropDown
 
 # from libqtile import extension
 from command_set import CommandSet
@@ -76,17 +76,17 @@ keys = [
     Key([mod], "d", lazy.spawn("discord"), desc="launch discord"),
     Key([mod], "a", lazy.spawn(rofi_launcher), desc="app launcher"),
     Key([mod], "Return", lazy.spawn(terminal), desc="launch terminal"),
-    KeyChord(
-        [mod],
-        "g",
-        [
-            Key([mod], "s", lazy.spawn("steam"), desc="launch steam"),
-            Key([mod], "l", lazy.spawn("lutris"), desc="launch lutris"),
-            Key([mod], "e", lazy.spawn("heroic"), desc="launch heroic"),
-            Key([mod], "r", lazy.spawn("rare"), desc="launch rare"),
-        ],
-        mode="Game Launcher",
-    ),
+    # KeyChord(
+    #     [mod],
+    #     "g",
+    #     [
+    #         Key([mod], "s", lazy.spawn("steam"), desc="launch steam"),
+    #         Key([mod], "l", lazy.spawn("lutris"), desc="launch lutris"),
+    #         Key([mod], "e", lazy.spawn("heroic"), desc="launch heroic"),
+    #         Key([mod], "r", lazy.spawn("rare"), desc="launch rare"),
+    #     ],
+    #     mode="Game Launcher",
+    # ),
     # Window Movements
     Key([mod], "h", lazy.layout.left(), desc="move focus to left"),
     Key([mod], "j", lazy.layout.down(), desc="move focus down"),
@@ -195,3 +195,18 @@ for i in groups:
             ),
         ]
     )
+
+groups.append(
+    ScratchPad("ScratchPad", [
+            DropDown("terminal", terminal, width=0.4, height=0.5, x=0.3, y=0.2, opacity=1),
+        ]
+    )
+)
+keys.extend(
+    [
+        Key(
+            [mod, "shift"], "Return", lazy.group["ScratchPad"].dropdown_toggle("terminal")
+        ),
+    ]
+)
+

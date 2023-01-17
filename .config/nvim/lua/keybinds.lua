@@ -41,9 +41,19 @@ map("n", "<M-k>", ":resize -2<CR>", {noremap = true})
 map("n", "<M-l>", ":vertical resize +2<CR>", {noremap = true})
 
 -- Easy Capitalization
-map("n", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>", {})
-map("v", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>", {})
-map("i", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>i", {})
+map("n", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>:noh<CR>", {})
+map("v", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>:noh<CR>", {})
+map("i", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>:noh<CR>i", {})
+
+-- The Best Thing In vscode But Better
+map('v', "J", ":m '>+1<CR>gv=gv")
+map('v', "K", ":m '<-2<CR>gv=gv")
+
+-- Replace The Current Word
+map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
+--The BEST MAP
+map('x', "<Leader>p", "\"_dP")
 
 -- STOP USING THE ARROW KEYS !!
 -- map('n', '<Up>', [[:echoerr "Do not do that!!"<cr>]], {noremap = true})
@@ -52,14 +62,13 @@ map("i", "<F7>", "<Esc>V:s/\\v<(.)(\\w*)/\\u\\1\\L\\2/g<CR>i", {})
 -- map('n', '<Right>', [[:echoerr "Do not do that!!"<cr>]], {noremap = true})
 
 -- Comments
-map('n', '<C-_>', ":lua require('Comment.api').toggle_current_linewise()<CR>",
-    {noremap = true, silent = true})
-map('v', '<C-_>',
-    ":lua require('Comment.api').toggle_linewise_op(vim.fn.visualmode())<CR>",
-    {noremap = true, silent = true})
+map('n', '<C-_>', ":lua require('Comment.api').toggle.linewise.current()<CR>",
+{noremap = true, silent = true})
+map('x', '<C-_>', '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>',
+{noremap = true, silent = true})
 map('i', '<C-_>',
-    "<Esc>:lua require('Comment.api').toggle_current_linewise()<CR>i",
-    {noremap = true, silent = true})
+":lua require('Comment.api').toggle.linewise.current() <CR>",
+{noremap = true, silent = true})
 
 -- Keybinds Reloading Init Files
 map('n', '<Leader>vr', '<Cmd>luafile $MYVIMRC<CR>', {noremap = true})
@@ -98,60 +107,88 @@ map('n', '<C-k>', '<C-w>k', {noremap = true, silent = true})
 map('n', '<C-l>', '<C-w>l', {noremap = true, silent = true})
 
 -- Tab Navigation
-map('n', '<M-Tab>', ':BufferLineMovePrev<CR>', {noremap = true, silent = true})
-map('n', '<M-S-Tab>', ':BufferLineMoveNext<CR>', {noremap = true, silent = true})
+map('n', '<M-Tab>', ':lua require("harpoon.ui").nav_next() <CR>', {noremap = true, silent = true})
+map('n', '<M-S-Tab>', ':lua require("harpoon.ui").nav_prev() <CR>', {noremap = true, silent = true})
 
 -- Ctrl + W Close The Window
 -- map('n', '<C-w>', ':bd!<CR>', { noremap = true, silent = true })
 -- map('i', '<C-w>', ':bd!<CR>', { noremap = true, silent = true })
 
 -- Telescope && Fuzzy Find
-map('n', '<Leader>f.', ':lua require(\'telescope.builtin\').find_files()<CR>',
-    {noremap = true, silent = true})
+local tele = require('telescope.builtin')
 map('n', '<Leader>ff',
-    ':lua require(\'pluginSettings.telescope\').search_workspace()<CR>',
-    {noremap = true, silent = true})
-map('n', '<Leader>fb', ':lua require(\'telescope.builtin\').buffers()<CR>',
-    {noremap = true, silent = true})
-map('n', '<Leader>fg', ':lua require(\'telescope.builtin\').live_grep()<CR>',
-    {noremap = true, silent = true})
-map('n', '<Leader>fh', ':lua require(\'telescope.builtin\').help_tags()<CR>',
-    {noremap = true, silent = true})
+tele.find_files,
+{noremap = true, silent = true})
+map('n', '<Leader>fb', tele.buffers,
+{noremap = true, silent = true})
+map('n', '<Leader>fg', tele.live_grep,
+{noremap = true, silent = true})
+map('n', '<Leader>fh', tele.help_tags,
+{noremap = true, silent = true})
+map('n', '<Leader>fs', tele.spell_suggest,
+{noremap = true, silent = true})
+map('n', '<Leader>fk', tele.keymaps,
+{noremap = true, silent = true})
+map('n', '<Leader>fvo', tele.vim_options,
+{noremap = true, silent = true})
+map('n', '<Leader>fd', tele.diagnostics,
+{noremap = true, silent = true})
+map('n', '<Leader>fcs', tele.git_status,
+{noremap = true, silent = true})
 
 -- LSP
--- lsp finder to find the cursor word definition and reference
-map("n", "gh", ':lua require("lspsaga.finder").lsp_finder()<CR>',
-    {silent = true, noremap = true})
+map("n", "gh", "<cmd>Lspsaga lsp_finder<CR>",
+{silent = true, noremap = true})
 
-map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>',
-    {noremap = true, silent = true})
-map("n", "gd", "<cmd>Lspsaga preview_definition<CR>", {silent = true})
-map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>',
-    {noremap = true, silent = true})
+map('n', 'gD', ":lua vim.lsp.buf.declaration()<CR>",
+{noremap = true, silent = true})
+map("n", "gd", "<cmd>Lspsaga peek_definition<CR>", {silent = true})
+map('n', 'gi', ":lua vim.lsp.buf.implementation()<CR>",
+{noremap = true, silent = true})
 map("n", "K", ":lua vim.lsp.buf.hover()<CR>", {silent = true})
-map("n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>",
-    {silent = true, noremap = true})
+map("n", "<leader>k", ":lua vim.lsp.buf.signature_help()<CR>",
+{silent = true, noremap = true})
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>",
-    {silent = true, noremap = true})
+{silent = true, noremap = true})
 map("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>",
-    {silent = true, noremap = true})
-map('n', '<Leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>',
-    {noremap = true, silent = true})
+{silent = true, noremap = true})
+map('n', '<Leader>gr', ":lua vim.lsp.buf.references()<CR>",
+{noremap = true, silent = true})
 map("n", "gr", "<cmd>Lspsaga rename<CR>", {silent = true, noremap = true})
-map('n', '<Leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>',
-    {noremap = true, silent = true})
+map('n', '<Leader>D', ":lua vim.lsp.buf.type_definition()<CR>",
+{noremap = true, silent = true})
 map("n", "<leader>e", "<cmd>Lspsaga show_line_diagnostics<CR>",
-    {silent = true, noremap = true})
+{silent = true, noremap = true})
 map('n', '<Leader>[', "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-    {noremap = true, silent = true})
+{noremap = true, silent = true})
 map('n', '<Leader>]', "<cmd>Lspsaga diagnostic_jump_next<CR>",
-    {noremap = true, silent = true})
+{noremap = true, silent = true})
+map("n", "<Leader>T", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
+map("t", "<Leader>T", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
 
 -- UndoTree
 map('n', "<Leader>u", ":UndotreeToggle<CR>", {noremap = true})
 
+-- Format
+map('n', "<Leader>F", ":FormatWrite<CR>", {noremap = true})
+
 -- Other
 map('n', '<Leader>l', ':noh<CR>', {noremap = true}) -- Clear highlights
-map('n', '<leader>o', 'm`o<Esc>``j', {noremap = true}) -- Insert a newline and back to normal mode
-map('n', '<leader>O', 'm`O<Esc>``k', {noremap = true}) -- Insert a newline and back to normal mode
+map('n', '<leader>o', ":pu =''<CR>", {noremap = true}) -- Insert a newline and back to normal mode
+map('n', '<leader>O', ":pu! =''<CR>", {noremap = true}) -- Insert a newline and back to normal mode
 
+-- harpoon
+map('n', '<Leader>ha', ':lua require("harpoon.mark").add_file()<CR>')
+map('n', '<Leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>')
+
+-- debugging
+map("n", "<F1>", ":lua require('dap').step_into()<CR>")
+map("n", "<F2>", ":lua require('dap').step_over()<CR>")
+map("n", "<F3>", ":lua require('dap').step_out()<CR>")
+map("n", "<F4>", ":lua require('dap').continue()<CR>")
+map("n", "<F5>", ":lua require('dapui').toggle()<CR>")
+map("n", "<leader>b", ":lua require('dap').toggle_breakpoint()<CR>")
+map("n", "<leader>B", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+map("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
+map("n", "<leader>dr", ":lua require('dap').repl.open()<CR>")
+-- map("n", "<leader>dt", pydap.debug_test) -- not working

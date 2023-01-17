@@ -1,4 +1,5 @@
 window:
+  title: Terminal
   opacity: 0.9
   decorations: none
   padding:

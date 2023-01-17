@@ -1,7 +1,4 @@
-local saga = require 'lspsaga'
-
--- use default config
-saga.init_lsp_saga()
+local saga = require('lspsaga')
 
 -- use custom config
-saga.init_lsp_saga({border_style = "rounded"})
+saga.setup({border_style = "rounded"})
