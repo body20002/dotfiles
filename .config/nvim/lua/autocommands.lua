@@ -1,32 +1,31 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- Packer
-local packerUserConfig = augroup("packerUserConfig", {})
-autocmd("BufWritePost", {
-  pattern = {"plugins.lua"},
-  command = "source <afile> | PackerCompile",
-  group = packerUserConfig
-})
-
 -- groff
 local groff = augroup("groff", {})
 autocmd("BufWritePost", {
   pattern = {"*.ms"},
-  command = "silent !groff -ms % -e -t -p -T pdf > %:r.pdf",
+  command = "silent !pdfroff -ms % -e -t -p > %:r.pdf",
   group = groff
 })
 
+-- leap
+autocmd("ColorScheme", {
+  pattern = {"*"},
+  callback = function()
+    require('leap').init_highlight(true)
+  end
+})
 
--- Indentaion
-local indentaion = augroup("indentaion", {})
+-- Indention
+local indention = augroup("indentaion", {})
 autocmd("FileType", {
   pattern = {
     "html", "htmldjango", "css", "scss", "javascript", "javascriptreact", "typescript",
     "typescriptreact", "lua", "markdown"
   },
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
-  group = indentaion
+  group = indention
 })
 
 -- Highlight yanked text
@@ -48,14 +47,10 @@ local keys = augroup("caps", {})
 autocmd("VimEnter", {pattern = "*", command = "silent !setxkbmap -option caps:escape", group=keys})
 autocmd("VimEnter", {pattern = "*", command = "silent !xset r rate 210 40", group=keys})
 
--- Format On Save
-local formatCode = augroup("formatCode ", {})
-autocmd("BufWritePre",
-{pattern = {"*"}, command = "silent FormatWrite", group = formatCode})
-
--- Opens PDF files in PDFVIWER/BROWSER which is defined in the environment variables
+-- Opens PDF/Media files in PDFVIWER/BROWSER which is defined in the environment variables
 -- instead of viewing the binary in Neovim
-local openPDF = augroup("openPDF", {})
+-- TODO: Add support for other file types & commands
+local openMediaFiles = augroup("openMediaFiles", {})
 autocmd("BufReadPost", {
   pattern = {"*.pdf"},
   callback = function()
@@ -72,12 +67,9 @@ autocmd("BufReadPost", {
     {detach = true})
     vim.api.nvim_buf_delete(0, {})
   end,
-  group = openPDF
+  group = openMediaFiles
 })
 
--- Open media files in BROWSER
--- TODO: Add support for other file types & commands
-local openMediaFiles = augroup("openMediaFiles", {})
 autocmd("BufReadPost", {
   pattern = {"*.png", "*.webp", "*.jpg", "*.jpeg", "*.mp4"},
   callback = function()
@@ -96,11 +88,6 @@ autocmd("BufWritePost",
 autocmd("BufReadPost",
 {pattern = "?*", command = "silent! loadview", group = saveFolds})
 
--- -- harpoon
--- local harpoon = augroup("harpoon", {})
--- autocmd("BufEnter",
---         {pattern="*", callback=function() require("harpoon.mark").add_file() end, group=harpoon
--- })
 
 -- Clear Message Area (Not Working :/)
 -- vim.cmd([[

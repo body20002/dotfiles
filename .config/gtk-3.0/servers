@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbel version="1.0"
+      xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks"
+      xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
+>
+  <bookmark href="smb://desktop-8o2k7t4/elden%20ring/" added="2022-03-01T10:36:10.150055Z" modified="2022-03-01T10:36:10.150082Z" visited="2022-03-01T10:36:10.150057Z">
+    <title>elden ring on desktop-8o2k7t4</title>
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;org.gnome.Nautilus %u&apos;" modified="2022-03-01T10:36:10.150078Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="smb://desktop-8o2k7t4/kdamdopaskdoasp%20d/" added="2022-03-01T11:37:45.337873Z" modified="2022-03-01T11:37:45.337881Z" visited="2022-03-01T11:37:45.337875Z">
+    <title>kdamdopaskdoasp d on desktop-8o2k7t4</title>
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;org.gnome.Nautilus %u&apos;" modified="2022-03-01T11:37:45.337877Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+</xbel>

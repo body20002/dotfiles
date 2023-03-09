@@ -3,23 +3,18 @@ require('settings')
 require('keybinds')
 require('autocommands')
 
--- Plugin Shenanigans
-require('plugins')
-require('pluginSettings/gruvbox-flat')
-require('pluginSettings/harpoon')
-require('pluginSettings/nvim-bufferline')
-require('pluginSettings/nvim-colorizer')
-require('pluginSettings/nvim-tree')
-require('pluginSettings/lualine')
-require('pluginSettings/pears')
-require('pluginSettings/lspsaga')
-require('pluginSettings/coq')
--- require('pluginSettings/lsp-installer')
--- require('pluginSettings/cmp')
-require('pluginSettings/nvim-treesitter')
-require('pluginSettings/formatter')
-require('pluginSettings/indent-blankline')
-require('pluginSettings/telescope')
-require('pluginSettings/presence')
-require('pluginSettings/dap')
-require('pluginSettings/mason')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+
+vim.opt.rtp:prepend(lazypath)
+
+return require('lazy').setup('plugins')

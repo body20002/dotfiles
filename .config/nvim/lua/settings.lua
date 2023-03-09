@@ -45,7 +45,7 @@ opt.showmode = false
 opt.termguicolors = true
 opt.hidden = true
 opt.clipboard = "unnamedplus"
-opt.formatoptions = "jql"
+opt.formatoptions = "cjql"
 opt.laststatus = 3
 opt.completeopt = {"menu", "menuone", "preview"}
 

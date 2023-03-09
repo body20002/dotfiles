@@ -32,7 +32,7 @@ export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
 export WINEPREFIX="$XDG_DATA_HOME"/wine
 # export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 export XCURSOR_PATH=/usr/share/icons:${XDG_DATA_HOME}/icons
-export ZSH="$XDG_DATA_HOME"/oh-my-zsh
+export ZSH="$XDG_CONFIG_HOME"/zsh/ohmyzsh
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export _Z_DATA="$XDG_DATA_HOME/z"
 
@@ -44,3 +44,4 @@ source ~/.config/secrets
 xset r rate 210 40
 setxkbmap -option caps:escape
 
+. "/home/body20002/.local/share/cargo/env"
