@@ -1,6 +1,7 @@
 alias %='source ~/.config/zsh/.zshrc'
 
-alias I='sudo pacman -S'
+alias I='sudo pacman -Sy'
+alias remove='sudo pacman -Rns'
 alias U='sudo pacman -Syu'
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -21,6 +22,8 @@ alias venv='source ./.venv/bin/activate'
 
 alias suh='systemctl hibernate'
 alias sus='systemctl suspend'
+alias srs='sudo systemctl restart'
+alias sss='sudo systemctl status'
 
 alias v='nvim'
 

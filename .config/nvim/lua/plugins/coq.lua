@@ -24,7 +24,6 @@ return {
       branch = "3p",
       config = function()
         require("coq_3p") {
-          {src = "cow", trigger = "!cow"},
           {src = "nvimlua", short_name = "NVIM", conf_only = true}
           -- { src = "dap" }
         }

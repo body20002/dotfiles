@@ -1,5 +1,5 @@
 xset r rate 210 40
-xrandr --output HDMI-0 --mode 1920x1080 --rate 60 --dpi 96
+xrandr --output HDMI-A-0 --mode 1920x1080 --rate 60 --dpi 96
 xrdb -load "$XDG_CONFIG_HOME/X11/xresources"
 picom --config /home/body20002/.config/picom/picom.conf --experimental-backends --animations &
 /usr/bin/dunst &
@@ -14,3 +14,4 @@ mpd ~/.config/mpd/mpd.conf &
 /sbin/mpDris2 &
 syncthing &
 keepassxc &
+flatpak run com.nextcloud.desktopclient.nextcloud &

@@ -1,8 +1,9 @@
+from functools import partial
 import os
 from pathlib import Path
 
 from libqtile.command import lazy
-from libqtile.config import Key, KeyChord, ScratchPad, DropDown
+from libqtile.config import Key, ScratchPad, DropDown
 
 # from libqtile import extension
 from command_set import CommandSet
@@ -15,13 +16,11 @@ mod = "mod4"
 home_path = Path.home()
 rofi_launcher = f"{home_path}/.config/rofi/bin/launcher_misc"
 browser = os.environ.get("BROWSER", "firefox")
+discord = "flatpak run com.discordapp.Discord"
 terminal = os.environ.get("TERMINAL", "alacritty")
 
-edit_config_selector = CommandSet(
-    commands={
-        dir.stem.capitalize(): f"{terminal} -e bash -c 'sleep .1; nvim {dir}'"
-        for dir in (home_path / ".config").glob("*")
-    },
+command_set = partial(
+    CommandSet,
     dmenu_prompt="Edit >",
     dmenu_ignorecase=True,
     dmenu_lines=20,
@@ -30,50 +29,68 @@ edit_config_selector = CommandSet(
 )
 
 
-def launch_nvim_in_env(dir: Path):
-    for file in dir.glob("*"):
-        if file.match("Pipfile"):
-            return f"{terminal} -e zsh -c 'sleep .1 && cd {dir} && pipenv shell tmux new-session nvim {dir}'"
-    return f"{terminal} -e zsh -c 'sleep .1 && cd {dir} && tmux new-session nvim {dir}'"
+def launch_nvim_in_tmux(dir: Path):
+    if dir.is_dir():
+        return f"{terminal} -e zsh -c 'sleep .1 && cd {dir} && tmux new-session nvim {dir}'"
+    else:
+        return f"{terminal} -e zsh -c 'sleep .1 && tmux new-session nvim {dir}'"
 
 
-edit_code_selector = CommandSet(
+def launch_nvim(dir: Path):
+    if dir.is_dir():
+        return f"{terminal} -e zsh -c 'sleep .1 && cd {dir} && nvim {dir}'"
+    else:
+        return f"{terminal} -e zsh -c 'sleep .1 && nvim {dir}'"
+
+
+def other_options(dirs: Path):
+    return {
+        "Open Current Folder": launch_nvim(dirs),
+        "Open Current Folder In TMUX": launch_nvim_in_tmux(dirs),
+    }
+
+
+def launch(dir: Path):
+    return command_set(
+        commands={
+            "Neovim": launch_nvim(dir),
+            "Neovim in TMUX": launch_nvim_in_tmux(dir),
+            # "VSCode": f"code {dir}", # other launch options
+        },
+        dmenu_prompt="Open In >",
+    )
+
+
+edit_config_selector = command_set(
     commands={
-        dirs.stem.capitalize(): CommandSet(
-            dmenu_prompt="Edit >",
-            dmenu_ignorecase=True,
-            dmenu_lines=20,
-            foreground=colors["primary"],
-            selected_background=colors["primary"],
-            commands={dir.stem.capitalize(): launch_nvim_in_env(dir) for dir in dirs.glob("*")},
+        dirs.stem.capitalize(): command_set(
+            commands={dir.stem.capitalize(): launch(dir) for dir in dirs.glob("*")} | other_options(dirs),
         )
-        if dirs.stem not in ["mysite", "site", "rice"]
-        else launch_nvim_in_env(dirs)
+        for dirs in (home_path / ".config").glob("*")
+    },
+)
+
+edit_code_selector = command_set(
+    commands={
+        dirs.stem.capitalize(): command_set(
+            commands={dir.stem.capitalize(): launch(dir) for dir in dirs.glob("*")} | other_options(dirs),
+        )
         for dirs in (home_path / "code").glob("*")
     },
-    dmenu_prompt="Edit >",
-    dmenu_ignorecase=True,
-    dmenu_lines=20,
-    foreground=colors["primary"],
-    selected_background=colors["primary"],
 )
 
-script_selector = CommandSet(
+script_selector = command_set(
     commands={
         "Edit Code": edit_code_selector,
         "Edit Config Files": edit_config_selector,
     },
     dmenu_prompt="Script >",
-    dmenu_ignorecase=True,
-    dmenu_lines=20,
-    foreground=colors["primary"],
-    selected_background=colors["primary"],
 )
 
 keys = [
     # Apps
     Key([mod], "f", lazy.spawn(browser), desc="launch browser"),
-    Key([mod], "d", lazy.spawn("discord"), desc="launch discord"),
+    Key([mod], "d", lazy.spawn(discord), desc="launch discord"),
     Key([mod], "a", lazy.spawn(rofi_launcher), desc="app launcher"),
     Key([mod], "Return", lazy.spawn(terminal), desc="launch terminal"),
     # KeyChord(
@@ -123,10 +140,10 @@ keys = [
         desc="change language.",
     ),
     # Audio Control
-    Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause"), desc="play/pause music"),
-    Key([], "XF86AudioStop", lazy.spawn("playerctl stop"), desc="stop music"),
-    Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="next track"),
-    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous"), desc="previous track"),
+    Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause -p spotify mpd vlc firefox"), desc="play/pause music"),
+    Key([], "XF86AudioStop", lazy.spawn("playerctl -a stop"), desc="stop music"),
+    Key([], "XF86AudioNext", lazy.spawn("playerctl next -p spotify mpd vlc firefox"), desc="next track"),
+    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous -p spotify mpd vlc firefox"), desc="previous track"),
     Key(
         [],
         "XF86AudioRaiseVolume",
@@ -197,16 +214,15 @@ for i in groups:
     )
 
 groups.append(
-    ScratchPad("ScratchPad", [
+    ScratchPad(
+        "ScratchPad",
+        [
             DropDown("terminal", terminal, width=0.4, height=0.5, x=0.3, y=0.2, opacity=1),
-        ]
+        ],
     )
 )
 keys.extend(
     [
-        Key(
-            [mod, "shift"], "Return", lazy.group["ScratchPad"].dropdown_toggle("terminal")
-        ),
+        Key([mod, "shift"], "Return", lazy.group["ScratchPad"].dropdown_toggle("terminal")),
     ]
 )
-

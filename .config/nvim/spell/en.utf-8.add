@@ -209,3 +209,6 @@ auth
 uri
 X11
 asyncio
+funcion
+OAuth
+endblock

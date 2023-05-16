@@ -2,9 +2,9 @@ from libqtile.config import Click, Drag
 from libqtile.command import lazy
 
 from floating_window_snapping import move_snap_window
-from groups import groups
+from groups import groups as groups
 from hooks import *
-from keys import keys, mod
+from keys import keys as keys, mod
 from theme import *
 from widgets_and_screens import *
 
@@ -16,4 +16,4 @@ mouse = [
 ]
 
 
-wmname = "Qtile"
+wmname = "LG3D"

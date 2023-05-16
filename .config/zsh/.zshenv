@@ -1,15 +1,18 @@
 export ZDOTDIR=$HOME/.config/zsh
 
-export BROWSER='librewolf'
-export PDFVIEWER='librewolf'
+export BROWSER='brave'
+export PDFVIEWER='brave'
 export EDITOR='nvim'
 export MANPAGER='nvim +Man!'
 export TERMINAL='alacritty'
 
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
 export XDG_STATE_HOME=$HOME/.local/state
+
+if [ -f "/home/body20002/.local/share/antidot/env.sh" ]; then source "/home/body20002/.local/share/antidot/env.sh"; fi
+if [ -f "/home/body20002/.local/share/antidot/alias.sh" ]; then source "/home/body20002/.local/share/antidot/alias.sh"; fi
 
 export ANDROID_HOME="$XDG_DATA_HOME"/android
 export CARGO_HOME="$XDG_DATA_HOME"/cargo

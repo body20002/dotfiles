@@ -1,7 +1,7 @@
 return {
   'williamboman/mason.nvim',
   dependencies = {
-    'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig'
+    'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig',
   },
   config = function()
     local lspconfig = require('lspconfig')
@@ -15,9 +15,8 @@ return {
     masonlsp.setup({
       ensure_installed = {
         'bashls', 'clangd', 'cssls', 'dockerls', 'eslint', 'gradle_ls',
-        'html', 'jsonls', 'jdtls', 'tsserver', 'sumneko_lua',
-        'marksman', 'pyright', 'sourcery', 'sqlls', 'taplo',
-        'tailwindcss', 'yamlls'
+        'html', 'jsonls', 'jdtls', 'tsserver', 'marksman', 'pyright',
+        'sourcery', 'sqlls', 'taplo', 'tailwindcss', 'yamlls', 'lua_ls'
       },
       automatic_installation = true
     })
@@ -30,7 +29,7 @@ return {
         lspconfig.emmet_ls.setup({
           filetypes = {
             "html", "css", "javascriptreact", "typescriptreact",
-            "htmldjango", "javascript", "typescript"
+            "htmldjango", "javascript", "typescript", "jinja",
           }
         })
       end,
@@ -38,7 +37,7 @@ return {
         lspconfig.html.setup({
           filetypes = {
             "html", "css", "javascriptreact", "typescriptreact",
-            "htmldjango", "javascript", "typescript"
+            "htmldjango", "javascript", "typescript", "jinja",
           }
         })
       end,
@@ -46,10 +45,9 @@ return {
         lspconfig.tailwindcss.setup({
           filetypes = {
             "html", "css", "javascriptreact", "typescriptreact",
-            "htmldjango", "javascript", "typescript"
+            "htmldjango", "javascript", "typescript", "jinja",
           },
-          init_options = {userLanguages = {htmldjango = "html"}}
-
+          init_options = {userLanguages = {htmldjango = "html", jinja='html'}}
         })
       end,
       ['pyright'] = function()

@@ -1,7 +1,7 @@
 return {
   'norcalli/nvim-colorizer.lua',
   lazy=true,
-  ft={"css", "html"},
+  ft={"css", "html", "jinja"},
   opts = {
     {'*'};
     {

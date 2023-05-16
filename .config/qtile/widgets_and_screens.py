@@ -3,8 +3,8 @@ from libqtile.config import Screen, Match
 
 
 from theme import colors, bar_color
-from widgets.mpd import Mpd2Imporved
-from widgets.mpris2 import Mpris2Improved
+# from widgets.mpd import Mpd2Imporved
+# from widgets.mpris2 import Mpris2Improved
 
 
 def updates():
@@ -146,6 +146,7 @@ floating_layout = layout.Floating(  # pyright: ignore
         Match(wm_class="Devtools"),
         Match(wm_class="gnome-calculator"),
         Match(wm_class="archlinux-logout.py"),
+        Match(wm_instance_class='origin.exe'),
     ],
     fullscreen_border_width=0,
     border_width=0,

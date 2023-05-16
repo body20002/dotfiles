@@ -3,6 +3,22 @@ local formatCode = vim.api.nvim_create_augroup("formatCode ", {})
 vim.api.nvim_create_autocmd("BufWritePre",
 {pattern = {"*"}, command = "silent FormatWrite", group = formatCode})
 
+local function jinja2_formatter()
+  -- prettier-plugin-jinja-template
+  local util = require 'formatter.util'
+  return {
+    exe = "prettier",
+    args = {
+      "--stdin-filepath",
+      util.escape_path(util.get_current_buffer_file_path()),
+      "--plugin",
+      '~/.local/share/npm/lib/node_modules/prettier-plugin-jinja-template',
+    },
+    stdin = true,
+    try_node_modules = true,
+  }
+end
+
 -- Provides the Format and FormatWrite commands
 return {
   'mhartington/formatter.nvim',
@@ -26,7 +42,8 @@ return {
         cpp = {require("formatter.filetypes.cpp").clangformat},
         cs = {require("formatter.filetypes.cs").clangformat},
         css = {require("formatter.filetypes.css").prettier},
-        html = {require("formatter.filetypes.css").prettier},
+        html = {require("formatter.filetypes.html").prettier},
+        jinja = {jinja2_formatter},
         javascript = {require("formatter.filetypes.javascript").prettier},
         javascriptreact = {
           require("formatter.filetypes.javascriptreact").prettier

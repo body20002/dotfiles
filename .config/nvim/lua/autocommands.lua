@@ -22,7 +22,7 @@ local indention = augroup("indentaion", {})
 autocmd("FileType", {
   pattern = {
     "html", "htmldjango", "css", "scss", "javascript", "javascriptreact", "typescript",
-    "typescriptreact", "lua", "markdown"
+    "typescriptreact", "lua", "markdown", "jinja"
   },
   command = "setlocal tabstop=2 softtabstop=2 shiftwidth=2",
   group = indention
